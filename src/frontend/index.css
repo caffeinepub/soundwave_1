@@ -1,0 +1,325 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --radius: 0.5rem;
+
+    /* SoundWave — Dark Music Theme */
+    /* bg: near-black #0d0d0d */
+    --background: 0.08 0 0;
+    --foreground: 0.97 0 0;
+
+    /* card: slightly lifted dark */
+    --card: 0.14 0 0;
+    --card-foreground: 0.97 0 0;
+
+    /* popover */
+    --popover: 0.12 0 0;
+    --popover-foreground: 0.97 0 0;
+
+    /* primary: emerald green #1DB954 → OKLCH approx */
+    --primary: 0.69 0.19 155;
+    --primary-foreground: 0.04 0 0;
+
+    /* secondary: dark lifted surface */
+    --secondary: 0.18 0 0;
+    --secondary-foreground: 0.85 0 0;
+
+    /* muted */
+    --muted: 0.16 0 0;
+    --muted-foreground: 0.55 0 0;
+
+    /* accent: slightly bright surface */
+    --accent: 0.22 0 0;
+    --accent-foreground: 0.97 0 0;
+
+    /* destructive */
+    --destructive: 0.58 0.22 27;
+    --destructive-foreground: 0.97 0 0;
+
+    --border: 0.28 0 0;
+    --input: 0.2 0 0;
+    --ring: 0.69 0.19 155;
+
+    /* chart colors */
+    --chart-1: 0.69 0.19 155;
+    --chart-2: 0.62 0.18 230;
+    --chart-3: 0.72 0.2 50;
+    --chart-4: 0.65 0.2 300;
+    --chart-5: 0.68 0.18 20;
+
+    /* sidebar: pure black */
+    --sidebar: 0.05 0 0;
+    --sidebar-foreground: 0.85 0 0;
+    --sidebar-primary: 0.69 0.19 155;
+    --sidebar-primary-foreground: 0.04 0 0;
+    --sidebar-accent: 0.14 0 0;
+    --sidebar-accent-foreground: 0.97 0 0;
+    --sidebar-border: 0.2 0 0;
+    --sidebar-ring: 0.69 0.19 155;
+
+    /* custom tokens */
+    --player: 0.1 0 0;
+    --player-foreground: 0.97 0 0;
+    --green: 0.69 0.19 155;
+    --green-hover: 0.74 0.19 155;
+    --surface-1: 0.12 0 0;
+    --surface-2: 0.16 0 0;
+    --surface-3: 0.22 0 0;
+    --text-primary: 0.97 0 0;
+    --text-secondary: 0.6 0 0;
+    --text-tertiary: 0.4 0 0;
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: "Inter", sans-serif;
+    overflow: hidden;
+  }
+
+  html {
+    overflow: hidden;
+  }
+}
+
+@layer utilities {
+  .font-display {
+    font-family: "Space Grotesk", sans-serif;
+  }
+
+  .text-green {
+    color: oklch(var(--green));
+  }
+
+  .bg-green {
+    background-color: oklch(var(--green));
+  }
+
+  .bg-green-hover:hover {
+    background-color: oklch(var(--green-hover));
+  }
+
+  .bg-player {
+    background-color: oklch(var(--player));
+  }
+
+  .bg-surface-1 {
+    background-color: oklch(var(--surface-1));
+  }
+
+  .bg-surface-2 {
+    background-color: oklch(var(--surface-2));
+  }
+
+  .bg-surface-3 {
+    background-color: oklch(var(--surface-3));
+  }
+
+  .text-primary-text {
+    color: oklch(var(--text-primary));
+  }
+
+  .text-secondary-text {
+    color: oklch(var(--text-secondary));
+  }
+
+  .text-tertiary-text {
+    color: oklch(var(--text-tertiary));
+  }
+
+  /* Equalizer animation bars */
+  .eq-bar {
+    display: inline-block;
+    background-color: oklch(var(--green));
+    border-radius: 1px;
+    animation: eq-bounce 0.8s ease-in-out infinite alternate;
+  }
+
+  .eq-bar:nth-child(1) { animation-delay: 0s; height: 8px; }
+  .eq-bar:nth-child(2) { animation-delay: 0.15s; height: 12px; }
+  .eq-bar:nth-child(3) { animation-delay: 0.3s; height: 6px; }
+  .eq-bar:nth-child(4) { animation-delay: 0.1s; height: 10px; }
+
+  @keyframes eq-bounce {
+    0% { transform: scaleY(0.3); }
+    100% { transform: scaleY(1); }
+  }
+
+  /* Smooth progress bar */
+  .progress-track {
+    position: relative;
+    height: 4px;
+    background-color: oklch(var(--surface-3));
+    border-radius: 2px;
+    cursor: pointer;
+    transition: height 0.1s ease;
+  }
+
+  .progress-track:hover {
+    height: 6px;
+  }
+
+  .progress-fill {
+    height: 100%;
+    background-color: oklch(var(--green));
+    border-radius: 2px;
+    pointer-events: none;
+    position: relative;
+  }
+
+  .progress-thumb {
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%) scale(0);
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: oklch(var(--text-primary));
+    transition: transform 0.1s ease;
+    pointer-events: none;
+  }
+
+  .progress-track:hover .progress-thumb {
+    transform: translateY(-50%) scale(1);
+  }
+
+  /* Volume track */
+  .volume-track {
+    position: relative;
+    height: 4px;
+    background-color: oklch(var(--surface-3));
+    border-radius: 2px;
+    cursor: pointer;
+    transition: height 0.1s ease;
+  }
+
+  .volume-track:hover {
+    height: 6px;
+  }
+
+  .volume-fill {
+    height: 100%;
+    background-color: oklch(var(--text-secondary));
+    border-radius: 2px;
+    transition: background-color 0.15s ease;
+  }
+
+  .volume-track:hover .volume-fill {
+    background-color: oklch(var(--green));
+  }
+
+  /* Song row hover */
+  .song-row {
+    transition: background-color 0.15s ease;
+  }
+
+  .song-row:hover {
+    background-color: oklch(var(--surface-3) / 0.7);
+  }
+
+  /* Card hover */
+  .music-card {
+    transition: background-color 0.15s ease, transform 0.15s ease;
+  }
+
+  .music-card:hover {
+    background-color: oklch(var(--surface-2));
+    transform: translateY(-2px);
+  }
+
+  .music-card:hover .play-overlay {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .play-overlay {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  /* Gradient genre cards */
+  .genre-card {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    cursor: pointer;
+  }
+
+  .genre-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 24px oklch(0 0 0 / 0.4);
+  }
+
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: oklch(var(--surface-3));
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: oklch(var(--text-tertiary));
+  }
+
+  /* Fade-in animation */
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .fade-in-up {
+    animation: fadeInUp 0.4s ease forwards;
+  }
+
+  .fade-in-up-delay-1 { animation-delay: 0.05s; opacity: 0; animation-fill-mode: forwards; }
+  .fade-in-up-delay-2 { animation-delay: 0.1s; opacity: 0; animation-fill-mode: forwards; }
+  .fade-in-up-delay-3 { animation-delay: 0.15s; opacity: 0; animation-fill-mode: forwards; }
+  .fade-in-up-delay-4 { animation-delay: 0.2s; opacity: 0; animation-fill-mode: forwards; }
+
+  /* Sidebar nav item */
+  .nav-item {
+    transition: color 0.15s ease;
+    border-radius: 4px;
+  }
+
+  .nav-item:hover {
+    color: oklch(var(--text-primary));
+  }
+
+  .nav-item.active {
+    color: oklch(var(--text-primary));
+  }
+
+  /* Glass player bar */
+  .glass-player {
+    background: linear-gradient(
+      to top,
+      oklch(0.06 0 0) 0%,
+      oklch(0.09 0 0 / 0.96) 100%
+    );
+    backdrop-filter: blur(20px);
+    border-top: 1px solid oklch(var(--surface-2));
+  }
+}
